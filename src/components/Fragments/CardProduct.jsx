@@ -39,7 +39,7 @@ const Body = ({ productName, children }) => {
   );
 };
 
-const Footer = ({ handleToCart, id }) => {
+const Footer = ({ handleToCart, id, price }) => {
   return (
     <>
       <div className="flex items-center justify-between mt-4 ">
@@ -52,7 +52,7 @@ const Footer = ({ handleToCart, id }) => {
         </span>
         <button
           className="flex items-center bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-blue-600 transition-all"
-          onClick={() => handleToCart({ id })}
+          onClick={() => handleToCart({ id, price })}
         >
           <FaShoppingCart className="mr-2" />
           Add to Cart

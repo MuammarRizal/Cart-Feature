@@ -35,26 +35,16 @@ const Products = () => {
     return (window.location.href = "/login");
   }
 
-  const [totalPrice, setTotalPrice] = useState(Number);
-  const [cart, setCart] = useState([
-    {
-      id: 10,
-      name: "Sepatu keren",
-      qty: 2,
-      price: 2000000,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
 
   const handleToCart = ({ id }) => {
     const addToCart = datasProducts.find((item) => item.id === id);
 
     setCart((prevCart) => {
-      if (cart.find((item) => item.id === addToCart.id)) {
-        const newQty = cart.map((cart) =>
+      if (prevCart.find((item) => item.id === addToCart.id)) {
+        return prevCart.map((cart) =>
           cart.id === addToCart.id ? { ...cart, qty: cart.qty + 1 } : cart
         );
-
-        return newQty;
       } else {
         return [...prevCart, addToCart];
       }
@@ -101,32 +91,45 @@ const Products = () => {
                 </tr>
               </thead>
               <tbody>
-                {cart.map((cartItem, index) => {
-                  const total = cartItem.price * cartItem.qty;
-                  return (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                      key={index}
+                {cart.length < 1 ? (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="text-center text-xl font-bold mt-3"
                     >
-                      <td className="px-6 py-4 text-center">{cartItem.name}</td>
-                      <td className="px-6 py-4 text-center">
-                        {cartItem.price.toLocaleString("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                          maximumFractionDigits: 0,
-                        })}
-                      </td>
-                      <td className="text-center">{cartItem.qty}</td>
-                      <td className="px-10 py-4 text-center">
-                        {total.toLocaleString("id-ID", {
-                          style: "currency",
-                          currency: "IDR",
-                          maximumFractionDigits: 0,
-                        })}
-                      </td>
-                    </tr>
-                  );
-                })}
+                      SILAHKAN ISI KERANJANG
+                    </td>
+                  </tr>
+                ) : (
+                  cart.map((cartItem, index) => {
+                    const total = cartItem.price * cartItem.qty;
+                    return (
+                      <tr
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        key={index}
+                      >
+                        <td className="px-6 py-4 text-center">
+                          {cartItem.name}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          {cartItem.price.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                            maximumFractionDigits: 0,
+                          })}
+                        </td>
+                        <td className="text-center">{cartItem.qty}</td>
+                        <td className="px-10 py-4 text-center">
+                          {total.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                            maximumFractionDigits: 0,
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
                 {/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <td className="px-10 py-4 text-center" colSpan={4}>
                     TOTAL : RP : 1000000

@@ -3,8 +3,14 @@ import Button from "../Elements/Button";
 import InputLabel from "../Elements/Input/Index";
 
 const FormLogin = () => {
+  const handleFormLogin = (event) => {
+    event.preventDefault();
+    localStorage.setItem("email", event.target.username.value);
+    localStorage.setItem("password", event.target.password.value);
+    window.location.href = "/products";
+  };
   return (
-    <form action="">
+    <form onSubmit={handleFormLogin}>
       <InputLabel
         label="Username"
         placeholder="Masukan Username"

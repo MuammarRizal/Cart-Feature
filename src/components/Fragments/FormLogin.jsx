@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Button from "../Elements/Button";
 import InputLabel from "../Elements/Input/Index";
 
 const FormLogin = () => {
+  const loginFocusRef = useRef(null);
+  useEffect(() => {
+    loginFocusRef.current.focus();
+  }, []);
   const handleFormLogin = (event) => {
     event.preventDefault();
     localStorage.setItem("email", event.target.username.value);
@@ -16,6 +20,7 @@ const FormLogin = () => {
         placeholder="Masukan Username"
         type="email"
         name="username"
+        focusRef={loginFocusRef}
       />
       <InputLabel
         label="Password"

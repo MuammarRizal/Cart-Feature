@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 
 const datasProducts = [
@@ -29,17 +29,33 @@ const datasProducts = [
 ];
 
 const Products = () => {
+  const [cart, setCart] = useState([]);
+  const [totalSum, setTotalSum] = useState(0);
   const getEmailInLocalStorage = localStorage.getItem("email");
   if (getEmailInLocalStorage === null) {
     alert("Silahkan login terlebih dahulu");
     return (window.location.href = "/login");
   }
 
-  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    const dataCartInLocalStorage = localStorage.getItem("cart");
+    setCart(JSON.parse(dataCartInLocalStorage) || []);
+  }, []);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        return acc + item.price * item.qty;
+      }, 0);
+      setTotalSum(sum);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
 
   const handleToCart = ({ id }) => {
     const addToCart = datasProducts.find((item) => item.id === id);
 
+    console.log(cart);
     setCart((prevCart) => {
       if (prevCart.find((item) => item.id === addToCart.id)) {
         return prevCart.map((cart) =>
@@ -50,6 +66,15 @@ const Products = () => {
       }
     });
   };
+
+  const totalRef = useRef(null);
+  useEffect(() => {
+    if (cart.length > 0) {
+      totalRef.current.style.display = "table-row";
+    } else {
+      totalRef.current.style.display = "none";
+    }
+  }, [cart]);
 
   return (
     <Fragment>
@@ -72,36 +97,27 @@ const Products = () => {
         </div>
 
         <div className="table w-7/12">
-          <div className="relative overflow-x-auto">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-center">
-                    Product name
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-center">
-                    Price
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-center">
-                    Quantity
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-center">
-                    Total
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart.length < 1 ? (
+          {
+            <div className="relative overflow-x-auto">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                    <td
-                      colSpan={4}
-                      className="text-center text-xl font-bold mt-3"
-                    >
-                      SILAHKAN ISI KERANJANG
-                    </td>
+                    <th scope="col" className="px-6 py-3 text-center">
+                      Product name
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-center">
+                      Price
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-center">
+                      Quantity
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-center">
+                      Total
+                    </th>
                   </tr>
-                ) : (
-                  cart.map((cartItem, index) => {
+                </thead>
+                <tbody>
+                  {cart.map((cartItem, index) => {
                     const total = cartItem.price * cartItem.qty;
                     return (
                       <tr
@@ -128,16 +144,24 @@ const Products = () => {
                         </td>
                       </tr>
                     );
-                  })
-                )}
-                {/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td className="px-10 py-4 text-center" colSpan={4}>
-                    TOTAL : RP : 1000000
-                  </td>
-                </tr> */}
-              </tbody>
-            </table>
-          </div>
+                  })}
+                  <tr
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    ref={totalRef}
+                  >
+                    <td className="px-10 py-4 text-center" colSpan={4}>
+                      TOTAL :{" "}
+                      {totalSum.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        maximumFractionDigits: 0,
+                      })}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          }
         </div>
       </div>
     </Fragment>

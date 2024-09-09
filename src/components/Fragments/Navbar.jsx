@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Button from "../Elements/Button";
+import { IoCartOutline } from "react-icons/io5";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [cart, setCart] = useState([]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -17,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-gray-800 p-4 sticky top-0 z-10">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white text-xl font-bold">
           <Link to="/">{localStorage.getItem("email")}</Link>
@@ -40,6 +42,15 @@ const Navbar = () => {
           <Link to="/products" className="text-white hover:text-gray-400">
             Products
           </Link>
+
+          {/* belum dibuat */}
+          <button className="relative">
+            <IoCartOutline className="text-2xl" />
+            <span className="absolute -top-3 text-xs bg-red-800 w-5 rounded-xl">
+              12
+            </span>
+          </button>
+
           <Button type={"button"} onclick={handlerLogout}>
             Logout
           </Button>

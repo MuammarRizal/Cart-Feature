@@ -1,5 +1,6 @@
 import React from "react";
 import { FaShoppingCart, FaStar } from "react-icons/fa";
+import Rating from "./Rating";
 
 const CardProduct = ({ children }) => {
   return (
@@ -19,18 +20,12 @@ const Header = ({ imageUrl, imageAlt }) => {
   );
 };
 
-const Body = ({ productName, children }) => {
+const Body = ({ productName, children, count, rate }) => {
   return (
     <>
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-slate-300">{productName}</h2>
-        <div className="flex items-center">
-          <FaStar className="text-yellow-500 mr-1" />
-          <FaStar className="text-yellow-500 mr-1" />
-          <FaStar className="text-yellow-500 mr-1" />
-          <FaStar className="text-yellow-500 mr-1" />
-          <FaStar className="text-gray-300 mr-1" />
-        </div>
+        <Rating rate={rate} count={count} />
       </div>
       <div className="card-desc h-full">
         <p className="text-slate-300 text-base mt-2">{children}</p>
@@ -39,15 +34,14 @@ const Body = ({ productName, children }) => {
   );
 };
 
-const Footer = ({ handleToCart, id, price }) => {
+const Footer = ({ handleToCart, id, price, category }) => {
   return (
     <>
       <div className="flex items-center justify-between mt-4 ">
         <span className="text-xl font-semibold text-slate-300">
-          {price.toLocaleString("id-ID", {
+          {price.toLocaleString("us-US", {
             style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
+            currency: "USD",
           })}
         </span>
         <button
@@ -58,6 +52,9 @@ const Footer = ({ handleToCart, id, price }) => {
           Add to Cart
         </button>
       </div>
+      <span className="text-sm font-medium text-blue-600 self bg-black rounded-lg p-2 mt-2">
+        {category}
+      </span>
     </>
   );
 };

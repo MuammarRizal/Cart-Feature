@@ -1,7 +1,8 @@
+import { forwardRef } from "react";
 import InputForm from "./Input";
 import Label from "./Label";
 
-const InputLabel = ({ label, placeholder, type, name, focusRef }) => {
+const InputLabel = forwardRef(({ label, placeholder, type, name }, ref) => {
   return (
     <>
       <Label label={label}>
@@ -9,11 +10,11 @@ const InputLabel = ({ label, placeholder, type, name, focusRef }) => {
           type={type}
           placeholder={placeholder}
           name={name}
-          focusRef={focusRef}
+          ref={ref}
         />
       </Label>
     </>
   );
-};
+});
 
 export default InputLabel;

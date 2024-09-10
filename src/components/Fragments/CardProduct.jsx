@@ -2,6 +2,8 @@ import React from "react";
 import { FaShoppingCart, FaStar } from "react-icons/fa";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartSlices/actions";
 
 const CardProduct = ({ children }) => {
   return (
@@ -37,7 +39,11 @@ const Body = ({ productName, children, count, rate }) => {
   );
 };
 
-const Footer = ({ handleToCart, id, price, category }) => {
+const Footer = ({ title, id, price, category }) => {
+  const dispatch = useDispatch();
+  const addCartToStore = ({ id, price, qty, title }) => {
+    dispatch(addToCart({ id, price, qty, title }));
+  };
   return (
     <>
       <div className="flex items-center justify-between mt-4 ">
@@ -49,7 +55,7 @@ const Footer = ({ handleToCart, id, price, category }) => {
         </span>
         <button
           className="flex items-center bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-blue-600 transition-all"
-          onClick={() => handleToCart({ id, price })}
+          onClick={() => addCartToStore({ id, price, qty: 1, title })}
         >
           <FaShoppingCart className="mr-2" />
           Add to Cart

@@ -6,6 +6,7 @@ import Products from "./Pages/Products";
 import Navbar from "./components/Fragments/Navbar";
 import { useState } from "react";
 import ProfilePage from "./Pages/Profile";
+import DetailProduct from "./Pages/DetailProduct";
 
 function App() {
   const hrefLog = useLocation();
@@ -27,6 +28,7 @@ function App() {
           element={<Products cartDisplay={cartDisplay} />}
         />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/products/:id" element={<DetailProduct />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </>

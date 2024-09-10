@@ -67,6 +67,7 @@ const Products = () => {
                 <CardProduct.Header
                   imageAlt={item.title}
                   imageUrl={item.image}
+                  idProduct={item.id}
                 />
 
                 <CardProduct.Body

@@ -6,4 +6,13 @@ const getProducts = async () => {
   return response;
 };
 
-export { getProducts };
+const getDetailProducts = (id, callback) => {
+  axios
+    .get(`https://fakestoreapi.com/products/${id}`)
+    .then((res) => {
+      callback(res);
+    })
+    .catch((err) => console.log(err));
+};
+
+export { getProducts, getDetailProducts };

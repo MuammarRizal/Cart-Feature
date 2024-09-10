@@ -1,6 +1,7 @@
 import React from "react";
 import { FaShoppingCart, FaStar } from "react-icons/fa";
 import Rating from "./Rating";
+import { Link } from "react-router-dom";
 
 const CardProduct = ({ children }) => {
   return (
@@ -14,9 +15,11 @@ const CardProduct = ({ children }) => {
   );
 };
 
-const Header = ({ imageUrl, imageAlt }) => {
+const Header = ({ imageUrl, imageAlt, idProduct }) => {
   return (
-    <img className="w-full h-48 object-cover" src={imageUrl} alt={imageAlt} />
+    <Link to={`/products/${idProduct}`}>
+      <img className="w-full h-48 object-cover" src={imageUrl} alt={imageAlt} />
+    </Link>
   );
 };
 

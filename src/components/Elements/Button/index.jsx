@@ -8,7 +8,7 @@ const Button = ({
   return (
     <button
       type={type}
-      className={`text-white px-6 py-2 border rounded w-full bg- ${bgColor} ${textColor} font-semibold`}
+      className={`text-white px-6 py-2 border rounded w-full bg- ${bgColor} ${textColor} font-semibold flex justify-center items-center`}
       onClick={onclick}
     >
       {children}

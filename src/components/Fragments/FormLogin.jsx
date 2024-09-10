@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "../Elements/Button";
 import InputLabel from "../Elements/Input/Index";
 import { postUsername } from "../../services/auth.service.js";
+import Loading from "./Loading.jsx";
+import { FaSpinner } from "react-icons/fa";
 const FormLogin = () => {
   const loginFocusRef = useRef(null);
   const [usernameHandler, setUsernameHandler] = useState("");
   const [showText, setShowText] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (usernameHandler.length > 0) {
       const timer = setTimeout(() => {
@@ -19,6 +22,7 @@ const FormLogin = () => {
     loginFocusRef.current.focus();
   }, []);
   const handleFormLogin = (event) => {
+    setLoading(true);
     event.preventDefault();
     postUsername(
       {
@@ -31,11 +35,13 @@ const FormLogin = () => {
           window.location.href = "/products";
         } else {
           setShowText(true);
+          setLoading(false);
           setUsernameHandler(res.response.data);
         }
       }
     );
   };
+
   return (
     <form onSubmit={handleFormLogin}>
       <p className="text-2lg text-red-800 font-bold text-center">
@@ -57,7 +63,11 @@ const FormLogin = () => {
         name="password"
       />
       <Button type={"submit"} bgColor="bg-teal-500" textColor="text-white">
-        Login
+        {!loading ? (
+          "Login"
+        ) : (
+          <FaSpinner className="animate-spin w-full disabled:" />
+        )}
       </Button>
     </form>
   );

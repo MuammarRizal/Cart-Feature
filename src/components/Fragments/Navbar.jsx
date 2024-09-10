@@ -4,10 +4,20 @@ import { Link } from "react-router-dom";
 import Button from "../Elements/Button";
 import { IoCartOutline } from "react-icons/io5";
 import { jwtDecode } from "jwt-decode";
+import { useSelector } from "react-redux";
 const Navbar = () => {
+  const cart = useSelector((state) => state.cart.data);
   const usernameLocalStorage = localStorage.getItem("token");
   const [username, setUsername] = useState("");
+  const [cartTotal, setCartTotal] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const cartTotal = cart.reduce((acc, item) => {
+      return (acc += item.qty);
+    }, 0);
+    setCartTotal(cartTotal);
+  }, [cart]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -53,7 +63,7 @@ const Navbar = () => {
           <button className="relative">
             <IoCartOutline className="text-2xl" />
             <span className="absolute -top-3 text-xs bg-red-800 w-5 rounded-xl">
-              12
+              {cartTotal}
             </span>
           </button>
 

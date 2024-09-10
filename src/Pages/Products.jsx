@@ -1,13 +1,15 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import { getProducts } from "../services/products.service";
 import Loading from "../components/Fragments/Loading";
 import { useLogin } from "../hooks/useLogin";
 import TableCart from "../components/Layouts/TableCart";
+import { DarkModeContext } from "../context/DarkMode";
 
 const Products = () => {
   const [products, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { isDarkMode } = useContext(DarkModeContext);
   useLogin();
 
   useEffect(() => {
@@ -22,7 +24,11 @@ const Products = () => {
 
   return (
     <Fragment>
-      <div className="container w-full flex px-4 py-3 gap-2 relative ">
+      <div
+        className={`container w-full flex px-4 py-3 gap-2 relative ${
+          isDarkMode ? "bg-white" : "bg-slate-900"
+        }`}
+      >
         <div className="w-3/4 flex-wrap flex gap-4">
           {!loading ? (
             <Loading />

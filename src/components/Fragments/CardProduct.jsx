@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaShoppingCart, FaStar } from "react-icons/fa";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlices/actions";
+import { DarkModeContext } from "../../context/DarkMode";
 
 const CardProduct = ({ children }) => {
+  const { isDarkMode } = useContext(DarkModeContext);
   return (
     <>
-      <div className="max-w-xs rounded overflow-hidden shadow-lg p-2 bg-slate-800">
+      <div
+        className={`max-w-xs rounded overflow-hidden shadow-lg p-2 ${
+          isDarkMode
+            ? "bg-slate-800 text-gray-400"
+            : "bg-slate-200 text-slate-800"
+        }`}
+      >
         <div className="px-4 py-4 h-full justify-between flex flex-col">
           {children}
         </div>
@@ -29,11 +37,11 @@ const Body = ({ productName, children, count, rate }) => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-slate-300">{productName}</h2>
+        <h2 className="text-xl font-bold ">{productName}</h2>
         <Rating rate={rate} count={count} />
       </div>
       <div className="card-desc h-full">
-        <p className="text-slate-300 text-base mt-2">{children}</p>
+        <p className="text-base mt-2">{children}</p>
       </div>
     </>
   );
@@ -47,7 +55,7 @@ const Footer = ({ title, id, price, category }) => {
   return (
     <>
       <div className="flex items-center justify-between mt-4 ">
-        <span className="text-xl font-semibold text-slate-300">
+        <span className="text-xl font-semibold ">
           {price.toLocaleString("us-US", {
             style: "currency",
             currency: "USD",

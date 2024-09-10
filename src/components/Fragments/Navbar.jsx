@@ -3,18 +3,24 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Button from "../Elements/Button";
 import { IoCartOutline } from "react-icons/io5";
-
+import { jwtDecode } from "jwt-decode";
 const Navbar = () => {
+  const usernameLocalStorage = localStorage.getItem("token");
+  const [username, setUsername] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [cart, setCart] = useState([]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    if (usernameLocalStorage !== null) {
+      setUsername(jwtDecode(usernameLocalStorage).user);
+    }
+  }, []);
+
   const handlerLogout = () => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.clear();
     window.location.href = "/login";
   };
 
@@ -22,7 +28,7 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4 sticky top-0 z-10">
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white text-xl font-bold">
-          <Link to="/">{localStorage.getItem("email")}</Link>
+          <Link to="/">{username}</Link>
         </div>
         <div className="md:hidden">
           <button

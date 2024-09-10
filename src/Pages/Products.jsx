@@ -2,17 +2,15 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import CardProduct from "../components/Fragments/CardProduct";
 import { getProducts } from "../services/products.service";
 import Loading from "../components/Fragments/Loading";
+import { useLogin } from "../hooks/useLogin";
 
 const Products = () => {
   const [cart, setCart] = useState([]);
   const [totalSum, setTotalSum] = useState(0);
   const [products, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const getEmailInLocalStorage = localStorage.getItem("token");
-  if (getEmailInLocalStorage === null) {
-    alert("Silahkan login terlebih dahulu");
-    return (window.location.href = "/login");
-  }
+
+  const username = useLogin();
 
   useEffect(() => {
     (async () => {

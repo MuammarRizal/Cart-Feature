@@ -60,12 +60,6 @@ const Navbar = () => {
           </button>
         </div>
         <div className={`hidden items-center space-x-6 md:flex`}>
-          <Link to="/" className=" hover:text-gray-400">
-            Home
-          </Link>
-          <Link to="/about" className=" hover:text-gray-400">
-            About
-          </Link>
           <Link to="/products" className=" hover:text-gray-400">
             Products
           </Link>
@@ -73,7 +67,9 @@ const Navbar = () => {
           {/* belum dibuat */}
           <button className="relative">
             <IoCartOutline className="text-2xl" />
-            <span className="absolute -top-3 text-xs bg-red-800 w-5 rounded-xl">
+            <span
+              className={`absolute -top-3 text-xs bg-red-800 w-5 rounded-xl text-slate-200`}
+            >
               {cartTotal}
             </span>
           </button>
@@ -103,15 +99,6 @@ const Navbar = () => {
         } overflow-hidden`}
       >
         <div className="mt-2 space-y-2">
-          <Link to="/" className="block  hover:text-gray-400">
-            Home
-          </Link>
-          <Link to="/about" className="block  hover:text-gray-400">
-            About
-          </Link>
-          <Link to="/services" className="block  hover:text-gray-400">
-            Services
-          </Link>
           <Link to="/logout" className=" hover:text-gray-400">
             Logout
           </Link>

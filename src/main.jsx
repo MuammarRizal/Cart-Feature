@@ -5,12 +5,15 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
+import TotalPrice from "./context/TotalPrice.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <TotalPrice>
+          <App />
+        </TotalPrice>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
